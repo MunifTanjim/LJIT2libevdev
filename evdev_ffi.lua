@@ -9,9 +9,7 @@ local bit = require("bit")
 local band, bor = bit.band, bit.bor
 local lshift, rshift = bit.lshift, bit.rshift
 
-
-
-ffi.cdef[[
+ffi.cdef([[
 enum libevdev_read_flag {
  LIBEVDEV_READ_FLAG_SYNC = 1,
  LIBEVDEV_READ_FLAG_NORMAL = 2,
@@ -40,19 +38,18 @@ enum libevdev_led_value {
  LIBEVDEV_LED_ON = 3,
  LIBEVDEV_LED_OFF = 4
 };
-]]
+]])
 
-
-ffi.cdef[[
+ffi.cdef([[
 struct libevdev;
 
 
 struct libevdev* libevdev_new(void);
 int libevdev_new_from_fd(int fd, struct libevdev **dev);
 void libevdev_free(struct libevdev *dev);
-]]
+]])
 
-ffi.cdef[[
+ffi.cdef([[
 typedef void (*libevdev_log_func_t)(enum libevdev_log_priority priority,
         void *data,
         const char *file, int line,
@@ -71,18 +68,16 @@ void libevdev_set_device_log_function(struct libevdev *dev,
           libevdev_device_log_func_t logfunc,
           enum libevdev_log_priority priority,
           void *data);
-]]
+]])
 
-
-ffi.cdef[[
+ffi.cdef([[
 int libevdev_grab(struct libevdev *dev, enum libevdev_grab_mode grab);
 int libevdev_set_fd(struct libevdev* dev, int fd);
 int libevdev_change_fd(struct libevdev* dev, int fd);
 int libevdev_get_fd(const struct libevdev* dev);
-]]
+]])
 
-
-ffi.cdef[[
+ffi.cdef([[
 int libevdev_next_event(struct libevdev *dev, unsigned int flags, struct input_event *ev);
 int libevdev_has_event_pending(struct libevdev *dev);
 const char* libevdev_get_name(const struct libevdev *dev);
@@ -129,10 +124,9 @@ int libevdev_disable_event_type(struct libevdev *dev, unsigned int type);
 int libevdev_enable_event_code(struct libevdev *dev, unsigned int type, unsigned int code, const void *data);
 int libevdev_disable_event_code(struct libevdev *dev, unsigned int type, unsigned int code);
 int libevdev_kernel_set_abs_info(struct libevdev *dev, unsigned int code, const struct input_absinfo *abs);
-]]
+]])
 
-
-ffi.cdef[[
+ffi.cdef([[
 int libevdev_kernel_set_led_value(struct libevdev *dev, unsigned int code, enum libevdev_led_value value);
 int libevdev_kernel_set_led_values(struct libevdev *dev, ...);
 int libevdev_set_clock_id(struct libevdev *dev, int clockid);
@@ -149,9 +143,8 @@ int libevdev_event_code_from_name_n(unsigned int type, const char *name, size_t 
 int libevdev_property_from_name(const char *name);
 int libevdev_property_from_name_n(const char *name, size_t len);
 int libevdev_get_repeat(const struct libevdev *dev, int *delay, int *period);
-]]
-
+]])
 
 local LIB_libevdev = ffi.load("evdev")
 
-return LIB_libevdev;
+return LIB_libevdev
